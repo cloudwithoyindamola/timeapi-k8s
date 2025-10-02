@@ -12,7 +12,6 @@ permissions:
   security-events: write
 
 env:
-  # Pull sensitive info from GitHub Secrets
   ACR_NAME: ${{ secrets.ACR_NAME }}
   AKS_CLUSTER_NAME: ${{ secrets.AKS_CLUSTER_NAME }}
   RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
@@ -52,7 +51,7 @@ jobs:
           output: trivy-results.sarif
           severity: LOW,UNKNOWN
           ignore-unfixed: true
-          exit-code: 0  # ensures workflow does not fail if vulnerabilities exist
+          exit-code: 0
 
       - name: Upload Trivy SARIF
         if: always()
@@ -88,8 +87,11 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Get AKS credentials
-        run: az aks get-credentials --resource-group ${{ secrets.RESOURCE_GROUP }} \
-          --name ${{ secrets.AKS_CLUSTER_NAME }} --overwrite-existing
+        run: |
+          az aks get-credentials \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AKS_CLUSTER_NAME }} \
+            --overwrite-existing
 
       - name: Set up Helm
         uses: azure/setup-helm@v3
@@ -97,7 +99,8 @@ jobs:
       - name: Helm upgrade/install
         run: |
           helm upgrade --install timeapi-devops ./timeapi-devops \
-            --namespace "${{ env.NAMESPACE }}" --create-namespace \
+            --namespace "${{ env.NAMESPACE }}" \
+            --create-namespace \
             --set image.repository=${{ env.ACR_NAME }}.azurecr.io/timeapi-devops \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --set environment=${{ env.ENVIRONMENT }}
