@@ -45,7 +45,7 @@ jobs:
         run: docker push ${{ env.ACR_NAME }}.azurecr.io/timeapi-devops:${{ steps.set-tag.outputs.IMAGE_TAG }}
 
       - name: Trivy scan (LOW+UNKNOWN)
-        uses: aquasecurity/trivy-action@v0.25.0
+        uses: aquasecurity/trivy-action@v0.67.0
         with:
           image-ref: ${{ env.ACR_NAME }}.azurecr.io/timeapi-devops:${{ steps.set-tag.outputs.IMAGE_TAG }}
           format: sarif
