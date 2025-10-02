@@ -8,10 +8,11 @@ venv/
 .terraform*
 terraform.tfstate*
 terraform.tfstate.backup
+infra/terraform.tfvars
 
 .terraform/
 .terraform*
-
+infra/tfplan
 .terraform.lock.hcl
 *.kubeconfig
 .env
