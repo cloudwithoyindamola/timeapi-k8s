@@ -34,6 +34,8 @@ service:
   type: LoadBalancer
   port: 5000
   externalTrafficPolicy: Local
+  loadBalancerSourceRanges: 
+    - 0.0.0.0/0  # Allow all IPs (for testing)
 
 # Ingress configuration
 ingress:
