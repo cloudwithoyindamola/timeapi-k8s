@@ -1,0 +1,88 @@
+# Default values for timeapi-devops
+# This file contains all configurable parameters for the Helm chart
+
+# Number of replicas
+replicaCount: 2
+
+# Image settings
+image:
+  repository: timeapidevopsacr.azurecr.io/timeapi-devops
+  tag: latest
+  pullPolicy: Always
+
+# Service account configuration
+serviceAccount:
+  create: true           # Create a new service account
+  name: ""               # Leave empty to use generated name
+  automount: true        # Mount API credentials automatically
+  annotations: {}        # Add optional annotations
+
+# Pod labels and annotations
+podLabels: {}
+podAnnotations: {}
+
+# Security settings
+podSecurityContext:
+  fsGroup: 1000
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  readOnlyRootFilesystem: false
+
+# Service configuration
+service:
+  type: LoadBalancer
+  port: 5000
+
+# Ingress configuration
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  hosts:
+    - host: timeapi-{{ .Values.environment }}.cloudwithoyindamola.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []  # Example TLS block:
+  # - secretName: timeapi-tls
+  #   hosts:
+  #     - timeapi-dev.cloudwithoyindamola.com
+
+# HTTPRoute configuration (added to fix linting error)
+httpRoute:
+  enabled: false
+  host: ""
+  paths:
+    - path: /
+      pathType: Prefix
+
+# Environment variable
+environment: dev
+
+# Resources
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+
+# Autoscaling settings
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+# Extra volumes and volume mounts
+volumes: []
+volumeMounts: []
+
+# Node scheduling
+nodeSelector: {}
+tolerations: []
+affinity: {}
