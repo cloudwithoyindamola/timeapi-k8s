@@ -98,6 +98,18 @@ resource "azurerm_network_security_group" "aks" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+  # Allow Azure Load Balancer health probes
+  security_rule {
+    name                       = "AllowAzureLoadBalancerProbes"
+    priority                   = 130
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "AzureLoadBalancer"
+    destination_address_prefix = "*"
+  }
 
   # Deny all other inbound traffic
   security_rule {
