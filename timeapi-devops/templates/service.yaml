@@ -6,6 +6,7 @@ metadata:
     {{- include "timeapi-devops.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  externalTrafficPolicy: Local 
   ports:
     - port: 80
       targetPort: {{ .Values.service.port }}
