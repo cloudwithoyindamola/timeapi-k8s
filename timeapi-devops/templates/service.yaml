@@ -4,6 +4,8 @@ metadata:
   name: {{ .Chart.Name }}-service
   labels:
     {{- include "timeapi-devops.labels" . | nindent 4 }}
+    annotations:
+    service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: "/health"
 spec:
   type: {{ .Values.service.type }}
   externalTrafficPolicy: Local 
