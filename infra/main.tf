@@ -69,7 +69,7 @@ resource "azurerm_network_security_group" "aks" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "443"
-    source_address_prefix      = "*"
+    source_address_prefix      = "*" #( allows from any IP, make sure you restrict in production)
     destination_address_prefix = "*"
   }
 
@@ -82,7 +82,7 @@ resource "azurerm_network_security_group" "aks" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "80"
-    source_address_prefix      = "*"
+    source_address_prefix      = "*" #( allows from any IP, make sure you restrict in production)
     destination_address_prefix = "*"
   }
 
@@ -95,7 +95,7 @@ resource "azurerm_network_security_group" "aks" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "6443"
-    source_address_prefix      = "*"
+    source_address_prefix      = "*" #( allows from any IP, make sure you restrict in production)
     destination_address_prefix = "*"
   }
   # Allow Azure Load Balancer health probes

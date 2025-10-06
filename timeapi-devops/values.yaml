@@ -35,7 +35,7 @@ service:
   port: 5000
   externalTrafficPolicy: Local
   loadBalancerSourceRanges: 
-    - 0.0.0.0/0  # Allow all IPs (for testing)
+    - 0.0.0.0/0  # Allow all IPs (for testing purposes only, dont use in production oooo )
 
 # Ingress configuration
 ingress:
@@ -45,7 +45,7 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   hosts:
-    - host: timeapi-dev.cloudwithoyindamola.com  # This will be ignored now
+    - host: timeapi-dev.cloudwithoyindamola.com  # This will be ignored now, till i get a domain 
       paths:
         - path: /
           pathType: Prefix
@@ -66,6 +66,7 @@ httpRoute:
 environment: dev
 
 # Resources
+# Note this might be too low for production, i am using this for testing 
 resources:
   requests:
     memory: "128Mi"
