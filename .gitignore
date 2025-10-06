@@ -14,6 +14,7 @@ infra/terraform.tfvars
 .terraform*
 infra/tfplan
 .terraform.lock.hcl
+*.tfplan
 *.kubeconfig
 .env
 *.pem
