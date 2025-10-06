@@ -1,0 +1,45 @@
+# Example Terraform Variables Configuration
+# Copy this file to terraform.tfvars and fill in your own values
+
+
+# Project Configuration
+
+project_name        = "your-project-name"
+environment         = "dev"                # e.g. dev, staging, prod
+location            = "North Europe"       # or any Azure region, e.g. West Europe
+resource_group_name = "your-resource-group"
+
+
+# AKS Configuration
+
+aks_cluster_name   = "your-aks-cluster"
+kubernetes_version = "1.30.14"             # optional, or your desired version
+node_count         = 1                     # adjust for your workload
+node_vm_size       = "Standard_D2s_v3"     # adjust for cost/performance
+
+
+# ACR Configuration
+
+acr_name = "youracrname"                   # must be globally unique
+acr_sku  = "Basic"                         # Basic, Standard, or Premium
+
+
+# Network Configuration
+
+vnet_address_space    = ["10.0.0.0/16"]
+subnet_address_prefix = "10.0.1.0/24"
+
+# NAT Gateway Variables
+nat_gateway_name = "your-nat-gateway"
+
+# NSG Variables
+nsg_name = "your-nsg"
+
+# Tags
+
+tags = {
+  Project     = "YourProjectName"
+  ManagedBy   = "Terraform"
+  Environment = "Development"  # e.g. dev, staging, prod
+  Owner       = "YourNameOrTeam"
+}
